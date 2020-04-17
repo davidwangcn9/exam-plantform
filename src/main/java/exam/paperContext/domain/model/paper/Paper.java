@@ -1,11 +1,13 @@
 package exam.paperContext.domain.model.paper;
 
+import com.google.common.collect.Lists;
 import exam.paperContext.domain.shared.Entity;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Paper implements Entity<Paper> {
     private PaperId paperId;
@@ -21,11 +23,19 @@ public class Paper implements Entity<Paper> {
     }
 
     public static Paper assemble(PaperId paperId, String teacherId, List<BlankQuiz> blankQuizzes) {
-        if(blankQuizzes.size() > 20) {
+        if (blankQuizzes.size() > 20) {
             throw new TooManyQuizzesException(blankQuizzes.size());
         }
 
         return new Paper(paperId, teacherId, blankQuizzes);
+    }
+
+    public int getTotalScore() {
+        return blankQuizzes.stream().collect(Collectors.summingInt(BlankQuiz::getScore));
+    }
+
+    public static Paper copy(Paper paper) {
+        return assemble(paper.paperId, paper.teacherId, Lists.newArrayList(paper.blankQuizzes));
     }
 
     public Collection<Object> getQuizzes() {
