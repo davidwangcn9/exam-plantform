@@ -12,4 +12,5 @@ import java.util.UUID;
 class Student {
     private UUID studentId;
     private int score;
+    private int age;
 }
