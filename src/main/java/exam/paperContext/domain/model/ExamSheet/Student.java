@@ -13,4 +13,5 @@ class Student {
     private UUID studentId;
     private int score;
     private int age;
+    private String name;
 }
