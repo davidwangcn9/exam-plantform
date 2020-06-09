@@ -14,4 +14,5 @@ class Student {
     private int score;
     private int age;
     private String name;
+    private String description;
 }
